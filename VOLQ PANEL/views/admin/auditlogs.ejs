@@ -91,9 +91,11 @@
                 </div>
             <% } %>
             
+            <% if (typeof pagination !== 'undefined' && pagination) { %>
             <div class="p-8 bg-white/[0.01] border-t border-white/5">
-                <%- include('../components/pagination', { pagination, filters: { action: filters.actionFilter, dateRange: filters.dateRange } }) %>
+                <%- include('../components/pagination', { pagination, filters: { action: typeof filters !== 'undefined' ? filters.actionFilter : '', dateRange: typeof filters !== 'undefined' ? filters.dateRange : '' } }) %>
             </div>
+            <% } %>
         </div>
     </div>
 </main>

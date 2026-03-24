@@ -54,9 +54,11 @@
                     </tbody>
                 </table>
             </div>
+            <% if (typeof pagination !== 'undefined' && pagination) { %>
             <div class="p-8 bg-white/[0.02] border-t border-white/5">
                 <%- include('../components/pagination', { pagination }) %>
             </div>
+            <% } %>
         </div>
 
         <!-- Detail Modal View -->

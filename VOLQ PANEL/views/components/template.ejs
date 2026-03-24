@@ -95,6 +95,19 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 20px; }
 
+        img.no-drag {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -webkit-user-select: none;
+            user-select: none;
+            pointer-events: none;
+        }
+        a img.no-drag { pointer-events: none; }
+        a:has(img.no-drag) { pointer-events: auto; }
+
         .loading-spin svg {
             fill: #868686;
         }
@@ -135,7 +148,7 @@
     <aside id="sidebar" class="sidebar w-68 flex-shrink-0 flex-col z-50 fixed lg:relative inset-y-0 left-0 -translate-x-full lg:translate-x-0 transition-transform duration-300 lg:flex">
         <div class="p-8 pb-10">
             <a href="/" class="flex items-center gap-4 group cursor-pointer">
-                <img src="/assets/logo.png" alt="Logo" class="w-12 h-12 rounded-[1.3rem] shadow-2xl shadow-blue-600/30 group-hover:scale-105 transition-all">
+                <img src="/assets/logo.png" alt="Logo" class="w-12 h-12 rounded-[1.3rem] shadow-2xl shadow-blue-600/30 group-hover:scale-105 transition-all no-drag" draggable="false" ondragstart="return false" oncontextmenu="return false">
 
                 <div class="space-y-0.5">
                     <h1 class="font-bold text-xl tracking-tight text-white/90"><%= name || 'VOLQ' %></h1>
