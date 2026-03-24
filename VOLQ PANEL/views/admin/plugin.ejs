@@ -1,79 +1,109 @@
 <%- include('../components/admin_addons_template') %>
-<main id="content">
-  <div class="bg-transparent">
-    <div class="sm:flex sm:items-center px-8 pt-4">
-      <div class="sm:flex-auto">
-        <h1 class="text-base font-medium leading-6 text-white">Edit Plugin Manifest</h1>
-        <p class="mt-1 tracking-tight text-sm text-neutral-500">Edit the content of the manifest.json of the plugin.</p>
-      </div>
+<div class="space-y-12">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div class="space-y-2">
+            <div class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[9px] font-bold rounded-lg w-max mb-2 tracking-tighter uppercase leading-none">Module Configuration</div>
+            <h2 class="text-4xl font-extrabold tracking-tight text-white leading-none">Edit Plugin Manifest</h2>
+            <p class="text-zinc-500 text-sm font-medium">Modify the core behavioral parameters for this administrative extension.</p>
+        </div>
+        <div class="flex gap-4">
+            <button id="save-button" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold rounded-2xl transition shadow-2xl shadow-blue-500/20 active:scale-95 uppercase tracking-widest">
+                Save Changes
+            </button>
+            <button id="save-close-button" class="px-8 py-3 bg-white/[0.03] border border-white/5 hover:border-white/10 text-white text-[10px] font-bold rounded-2xl transition uppercase tracking-widest">
+                Commit & Exit
+            </button>
+        </div>
     </div>
-  </div>
-</main>
 
-<div class="grid sm:grid-cols-4 gap-6 px-8 py-6">
-  <div class="bg-transparent shadow-xl border border-white/5 rounded-xl overflow-hidden w-96 sm:p-6 lg:p-5 mb-6 card" style="width:1600px">
-    <label class="text-neutral-400 text-sm tracking-tight mb-2">/plugins/<%= dir %>/<span class="text-white">manifest.json</span></label>
-    <div id="editor" class="rounded-xl focus:ring-transparent focus:border-transparent text-white text-sm mt-2 w-full items-center transition justify-left gap-16 hover:bg-white/5 flex border-white/5 bg-neutral-600/20 placeholder:text-white/20 text-white border border-black/10" style="height: 500px;"></div>
-    <div class="flex flex-row">
-      <button id="save-button" class="mt-6 block rounded-xl <%= theme['button-color'] %> px-3 py-2 text-center text-sm font-medium shadow-lg transition focus:outline focus:outline-2 focus:outline-offset-2">Save</button>
-      <button id="save-close-button" class="ml-6 mt-6 block rounded-xl <%= theme['button-color'] %> px-3 py-2 text-center text-sm font-medium shadow-lg transition focus:outline focus:outline-2 focus:outline-offset-2">Save & Close</button>
+    <!-- Interface Card -->
+    <div class="liquid-glass rounded-[3rem] border border-white/5 shadow-3xl overflow-hidden group">
+        <div class="p-6 bg-white/[0.02] border-b border-white/5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">/plugins/<%= dir %>/manifest.json</span>
+            </div>
+            <div class="flex gap-1.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-white/5"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-white/5"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-white/5"></div>
+            </div>
+        </div>
+        <div id="editor" class="h-[600px] w-full bg-black/10"></div>
     </div>
-  </div>
 </div>
-
+<!-- Close template shell div -->
+</div>
 <%- include('../components/footer') %>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/loader.min.js"></script>
 <script>
-  require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs' }});
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs' }});
+    require(['vs/editor/editor.main'], function() {
+        monaco.editor.defineTheme('liquidTheme', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: 'string.key.json', foreground: '3b82f6' },
+                { token: 'string.value.json', foreground: '10b981' },
+                { token: 'number.json', foreground: '8b5cf6' },
+                { token: 'keyword.json', foreground: 'f43f5e' }
+            ],
+            colors: {
+                'editor.background': '#00000000',
+                'editor.lineHighlightBackground': '#ffffff05',
+                'editorCursor.foreground': '#3b82f6',
+                'editorBracketMatch.background': '#3b82f620',
+                'editorBracketMatch.border': '#3b82f6'
+            }
+        });
 
-  require(['vs/editor/editor.main'], function() {
-    var editor = monaco.editor.create(document.getElementById('editor'), {
-      value: `<%- content %>`,
-      language: 'json',
-      theme: 'customTheme',
-      automaticLayout: true
-    });
+        var editor = monaco.editor.create(document.getElementById('editor'), {
+            value: `<%- content %>`,
+            language: 'json',
+            theme: 'liquidTheme',
+            automaticLayout: true,
+            fontSize: 14,
+            fontFamily: "'JetBrains Mono', monospace",
+            minimap: { enabled: false },
+            padding: { top: 20 },
+            scrollBeyondLastLine: false,
+            roundedSelection: true,
+            cursorSmoothCaretAnimation: true,
+            smoothScrolling: true
+        });
 
-    document.getElementById('save-button').addEventListener('click', function() {
-      var content = editor.getValue();
-      var filename = 'manifest.json';
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '/admin/plugins/<%= dir %>/save', true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log('Page content saved successfully.');
+        async function saveData(closeAfter = false) {
+            const btn = closeAfter ? document.getElementById('save-close-button') : document.getElementById('save-button');
+            const originalText = btn.textContent;
+            btn.textContent = 'SYNCHRONIZING...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/admin/plugins/<%= dir %>/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: editor.getValue(), filename: 'manifest.json' })
+                });
+                if(res.ok) {
+                    if(closeAfter) window.location.href = '/admin/plugins';
+                    else {
+                        btn.textContent = 'COMMITTED';
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.disabled = false;
+                        }, 2000);
+                    }
+                } else throw new Error();
+            } catch(e) {
+                alert('Commit failed.');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
         }
-      };
-      xhr.send(JSON.stringify({ content: content, filename: filename }));
-    });
 
-    document.getElementById('save-close-button').addEventListener('click', function() {
-      var content = editor.getValue();
-      var filename = 'manifest.json';
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '/admin/plugins/<%= dir %>/save', true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log('Page content saved successfully.');
-        }
-      };
-      xhr.send(JSON.stringify({ content: content, filename: filename }));
-      location.href = '/admin/plugins';
+        document.getElementById('save-button').onclick = () => saveData(false);
+        document.getElementById('save-close-button').onclick = () => saveData(true);
     });
-
-    monaco.editor.defineTheme('customTheme', {
-      base: 'vs-dark',
-      inherit: true,
-      rules: [
-        { token: 'delimiter.square.json', foreground: '87ceeb' },
-        { token: 'string.quote', foreground: 'ffa500' },
-        { token: 'delimiter.json', foreground: '4169e1' }
-      ],
-      colors: {}
-    });
-    monaco.editor.setTheme('customTheme');
-  });
 </script>

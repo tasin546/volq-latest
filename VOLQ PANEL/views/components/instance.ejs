@@ -1,200 +1,71 @@
-<div class="bg-gray-800 rounded-lg shadow-sm mx-4 sm:mx-6 mt-2 mb-4">
-   <div class="relative">
-       <nav class="flex overflow-x-auto pb-1 px-1 scrollbar-hide">
-           <ul role="list" class="flex flex-nowrap text-sm font-medium text-gray-400">
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm-91,94.25-40,32a8,8,0,1,1-10-12.5L107.19,128,75,102.25a8,8,0,1,1,10-12.5l40,32a8,8,0,0,1,0,12.5ZM176,168H136a8,8,0,0,1,0-16h40a8,8,0,0,1,0,16Z"/></svg>
-                       Console
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/files" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M224,64H154.67L126.93,43.2a16.12,16.12,0,0,0-9.6-3.2H72A16,16,0,0,0,56,56V72H40A16,16,0,0,0,24,88V200a16,16,0,0,0,16,16H192.89A15.13,15.13,0,0,0,208,200.89V184h16.89A15.13,15.13,0,0,0,240,168.89V80A16,16,0,0,0,224,64Zm0,104H208V112a16,16,0,0,0-16-16H122.67L94.93,75.2a16.12,16.12,0,0,0-9.6-3.2H72V56h45.33L147.2,78.4A8,8,0,0,0,152,80h72Z"/></svg>
-                       Files
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/users" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M164.47,195.63a8,8,0,0,1-6.7,12.37H10.23a8,8,0,0,1-6.7-12.37,95.83,95.83,0,0,1,47.22-37.71,60,60,0,1,1,66.5,0A95.83,95.83,0,0,1,164.47,195.63Zm87.91-.15a95.87,95.87,0,0,0-47.13-37.56A60,60,0,0,0,144.7,54.59a4,4,0,0,0-1.33,6A75.83,75.83,0,0,1,147,150.53a4,4,0,0,0,1.07,5.53,112.32,112.32,0,0,1,29.85,30.83,23.92,23.92,0,0,1,3.65,16.47,4,4,0,0,0,3.95,4.64h60.3a8,8,0,0,0,7.73-5.93A8.22,8.22,0,0,0,252.38,195.48Z"/></svg>
-                       Users
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/db" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M240,120a8,8,0,0,1-8,8H200v32h8a16,16,0,0,1,16,16v32a16,16,0,0,1-16,16H176a16,16,0,0,1-16-16V176a16,16,0,0,1,16-16h8V128H72v32h8a16,16,0,0,1,16,16v32a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V176a16,16,0,0,1,16-16h8V128H24a8,8,0,0,1,0-16h96V88h-8A16,16,0,0,1,96,72V40a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V72a16,16,0,0,1-16,16h-8v24h96A8,8,0,0,1,240,120Z"/></svg>
-                       Databases
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/modpacks" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Zm-48-32a32,32,0,1,0,32,32A32,32,0,0,0,128,96Zm48-64H128a48,48,0,0,0-32,83.39V152a8,8,0,0,1-8,8H32a8,8,0,0,0-8,8v40a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,152H40V176h48a24,24,0,0,0,24-24V115.2a48,48,0,0,0,64-70.4V72a8,8,0,0,0,16,0V40h24v152Z"/></svg>
-                       Modpacks
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/archives" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M223.16,68.42l-16-32A8,8,0,0,0,200,32H56a8,8,0,0,0-7.16,4.42l-16,32A8.08,8.08,0,0,0,32,72V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V72A8.08,8.08,0,0,0,223.16,68.42Zm-57.5,73.24a8,8,0,0,1-11.32,0L136,123.31V184a8,8,0,0,1-16,0V123.31l-18.34,18.35a8,8,0,0,1-11.32-11.32l32-32a8,8,0,0,1,11.32,0l32,32A8,8,0,0,1,165.66,141.66ZM52.94,64l8-16H195.06l8,16Z"/></svg>
-                       Backups
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/plugins" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM112,184a8,8,0,0,1-16,0V132.94l-4.42,2.22a8,8,0,0,1-7.16-14.32l16-8A8,8,0,0,1,112,120Zm56-8a8,8,0,0,1,0,16H136a8,8,0,0,1-6.4-12.8l28.78-38.37A8,8,0,1,0,145.07,132a8,8,0,1,1-13.85-8A24,24,0,0,1,176,136a23.76,23.76,0,0,1-4.84,14.45L152,176ZM48,80V48H72v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80Z"/></svg>
-                       Plugins
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/ftp" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M74.34,77.66a8,8,0,0,1,0-11.32l48-48a8,8,0,0,1,11.32,0l48,48a8,8,0,0,1-11.32,11.32L136,43.31V128a8,8,0,0,1-16,0V43.31L85.66,77.66A8,8,0,0,1,74.34,77.66ZM240,136v64a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16h68a4,4,0,0,1,4,4v3.46c0,13.45,11,24.79,24.46,24.54A24,24,0,0,0,152,128v-4a4,4,0,0,1,4-4h68A16,16,0,0,1,240,136Zm-40,32a12,12,0,1,0-12,12A12,12,0,0,0,200,168Z"/></svg>
-                       FTP
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/player" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M237.94,107.21a8,8,0,0,0-3.89-5.4l-29.83-17-.12-33.62a8,8,0,0,0-2.83-6.08,111.91,111.91,0,0,0-36.72-20.67,8,8,0,0,0-6.46.59L128,41.85,97.88,25a8,8,0,0,0-6.47-.6A111.92,111.92,0,0,0,54.73,45.15a8,8,0,0,0-2.83,6.07l-.15,33.65-29.83,17a8,8,0,0,0-3.89,5.4,106.47,106.47,0,0,0,0,41.56,8,8,0,0,0,3.89,5.4l29.83,17,.12,33.63a8,8,0,0,0,2.83,6.08,111.91,111.91,0,0,0,36.72,20.67,8,8,0,0,0,6.46-.59L128,214.15,158.12,231a7.91,7.91,0,0,0,3.9,1,8.09,8.09,0,0,0,2.57-.42,112.1,112.1,0,0,0,36.68-20.73,8,8,0,0,0,2.83-6.07l.15-33.65,29.83-17a8,8,0,0,0,3.89-5.4A106.47,106.47,0,0,0,237.94,107.21ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Z"/></svg>
-                       Player Manager
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
-               <li class="shrink-0 relative">
-                   <a href="/instance/<%= req.params.id %>/startup" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-4 h-4 mr-2"><rect width="256" height="256" fill="none"/><path d="M32,80a8,8,0,0,1,8-8H77.17a28,28,0,0,1,53.66,0H216a8,8,0,0,1,0,16H130.83a28,28,0,0,1-53.66,0H40A8,8,0,0,1,32,80Zm184,88H194.83a28,28,0,0,0-53.66,0H40a8,8,0,0,0,0,16H141.17a28,28,0,0,0,53.66,0H216a8,8,0,0,0,0-16Z"/></svg>
-                       Startup
-                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                   </a>
-               </li>
+<div class="px-4 sm:px-8 lg:px-16 mb-8 lg:mb-12">
+    <nav class="relative">
+        <!-- Persistent Matrix Navigation -->
+        <div class="flex items-center gap-0.5 liquid-glass p-1.5 rounded-2xl border border-white/5 shadow-2xl relative group/nav overflow-x-auto no-scrollbar w-full">
+            <div id="nexus-indicator" class="absolute h-[calc(100%-12px)] bg-white/5 rounded-xl border border-white/5 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] pointer-events-none"></div>
+            
+            <% 
+                const navItems = [
+                    { label: 'Console', icon: 'M13 10V3L4 14h7v7l9-11h-7z', url: '' },
+                    { label: 'Files', icon: 'M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z', url: '/files' },
+                    { label: 'Databases', icon: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4', url: '/db' },
+                    { label: 'Networking', icon: 'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071a9.5 9.5 0 0113.436 0m-17.678-4.243a15.5 15.5 0 0121.92 0', url: '/network' },
+                    { label: 'Startup', icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z', url: '/startup' },
+                    { label: 'Users', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', url: '/users' },
+                    { label: 'Plugins', icon: 'M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z', url: '/plugins' }
+                ];
 
-               <% if (addons && addons.plugins) { %>
-                   <% addons.plugins.forEach(plugin => { %>
-                       <% if (plugin.instancesidebar) { %>
-                           <% Object.entries(plugin.instancesidebar).forEach(([key, value]) => { %>
-                               <li class="shrink-0 relative">
-                                   <a href="<%= (value.url).replace('%id%', req.params.id) %>" class="nav-link px-4 py-3 hover:text-gray-200 transition-colors duration-150 flex items-center relative group">
-                                       <% if (value.icon.startsWith('<svg')) { %>
-                                           <%= value.icon %>
-                                       <% } else { %>
-                                           <i class="w-4 h-4 mr-2 <%= value.icon %>"></i>
-                                       <% } %>
-                                       <%= key %>
-                                       <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-150"></span>
-                                   </a>
-                               </li>
-                           <% }); %>
-                       <% } %>
-                   <% }); %>
-               <% } %>
-           </ul>
-       </nav>
-   </div>
+                addons.plugins.forEach(plugin => {
+                    if (plugin.instancesidebar) {
+                        Object.entries(plugin.instancesidebar).forEach(([key, value]) => {
+                            navItems.push({ label: key, icon: 'M13 10V3L4 14h7v7l9-11h-7z', url: (value.url).replace('/instance/' + req.params.id, '') });
+                        });
+                    }
+                });
+            %>
+
+            <% navItems.forEach(item => { %>
+                <a href="/instance/<%= req.params.id %><%= item.url %>" class="nexus-link flex-1 px-3 py-2.5 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-[0.15em] text-zinc-500 hover:text-white transition-all relative z-10 whitespace-nowrap rounded-xl">
+                    <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<%= item.icon %>"/></svg>
+                    <span><%= item.label %></span>
+                </a>
+            <% }); %>
+        </div>
+    </nav>
 </div>
 
-<style>
-   .scrollbar-hide::-webkit-scrollbar {
-       display: none;
-   }
-   .scrollbar-hide {
-       -ms-overflow-style: none;
-       scrollbar-width: none;
-   }
-   .nav-link {
-       position: relative;
-       transition: all 0.2s ease;
-   }
-   .nav-link.active {
-       color: #06b6d4;
-   }
-   .nav-link.active .bg-cyan-500 {
-       transform: scaleX(1);
-   }
-   .nav-link:hover {
-       color: #e5e7eb;
-   }
-   .nav-link .bg-cyan-500 {
-       transition: transform 0.2s ease;
-   }
-</style>
-
 <script>
-   document.addEventListener("DOMContentLoaded", function() {
-       const currentPath = window.location.pathname;
-       const navLinks = document.querySelectorAll('.nav-link');
+    document.addEventListener("DOMContentLoaded", function() {
+        const links = document.querySelectorAll('.nexus-link');
+        const indicator = document.getElementById('nexus-indicator');
+        const path = window.location.pathname;
 
-       // Find the best matching link
-       let bestMatch = null;
-       let bestMatchLength = 0;
+        function updateIndicator() {
+            let active = null;
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (path === href || (path.startsWith(href) && href.split('/').length > 3)) {
+                    active = link;
+                }
+            });
 
-       navLinks.forEach(link => {
-           const href = link.getAttribute('href');
+            if (active) {
+                links.forEach(l => l.classList.replace('text-white', 'text-zinc-500'));
+                active.classList.replace('text-zinc-500', 'text-white');
+                
+                const rect = active.getBoundingClientRect();
+                const parentRect = active.parentElement.getBoundingClientRect();
+                indicator.style.width = rect.width + 'px';
+                indicator.style.left = (rect.left - parentRect.left) + 'px';
+            }
+        }
 
-           // Exact match takes highest priority
-           if (currentPath === href) {
-               bestMatch = link;
-               bestMatchLength = Infinity;
-               return;
-           }
-
-           // Check for partial matches
-           if (currentPath.startsWith(href) && href.length > bestMatchLength) {
-               bestMatch = link;
-               bestMatchLength = href.length;
-           }
-       });
-
-       // Set active state on the best matching link
-       if (bestMatch) {
-           navLinks.forEach(link => {
-               link.classList.remove('text-cyan-500', 'active');
-               link.classList.add('text-gray-400');
-
-               const indicator = link.querySelector('.bg-cyan-500');
-               if (indicator) {
-                   indicator.classList.remove('scale-x-100');
-                   indicator.classList.add('scale-x-0');
-               }
-           });
-
-           bestMatch.classList.remove('text-gray-400');
-           bestMatch.classList.add('text-cyan-500', 'active');
-
-           const activeIndicator = bestMatch.querySelector('.bg-cyan-500');
-           if (activeIndicator) {
-               activeIndicator.classList.remove('scale-x-0');
-               activeIndicator.classList.add('scale-x-100');
-           }
-       }
-
-       // Add click handlers for smooth transitions
-       navLinks.forEach(link => {
-           link.addEventListener('click', function(e) {
-               navLinks.forEach(l => {
-                   l.classList.remove('text-cyan-500', 'active');
-                   l.classList.add('text-gray-400');
-
-                   const indicator = l.querySelector('.bg-cyan-500');
-                   if (indicator) {
-                       indicator.classList.remove('scale-x-100');
-                       indicator.classList.add('scale-x-0');
-                   }
-               });
-
-               this.classList.remove('text-gray-400');
-               this.classList.add('text-cyan-500', 'active');
-
-               const clickedIndicator = this.querySelector('.bg-cyan-500');
-               if (clickedIndicator) {
-                   clickedIndicator.classList.remove('scale-x-0');
-                   clickedIndicator.classList.add('scale-x-100');
-               }
-           });
-       });
-   });
+        updateIndicator();
+        window.addEventListener('resize', updateIndicator);
+    });
 </script>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>

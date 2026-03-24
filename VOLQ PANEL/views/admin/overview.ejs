@@ -1,379 +1,102 @@
-<%- include('../components/admin_template') %>
-
-<main id="content" class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
-  <!-- Welcome Popup (hidden by default) -->
-  <% if (showWelcome) { %>
-    <div class="popup-overlay active" id="welcomeOverlay"></div>
-    <div class="welcome-popup active" id="welcomePopup">
-      <div class="absolute top-0 right-0 m-4">
-        <button class="close-popup-btn" id="closeWelcome">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      <div class="text-center">
-        <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-white/10 rounded-full backdrop-blur-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-          </svg>
+<%- include('../components/template') %>
+<main class="p-12 lg:p-16">
+    <div class="max-w-7xl mx-auto space-y-12">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div class="space-y-2">
+                <div class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[9px] font-bold rounded-lg w-max mb-2 tracking-tighter uppercase leading-none">Global Insights</div>
+                <h2 class="text-4xl font-extrabold tracking-tight text-white leading-none"><%= req.translations.overview %></h2>
+                <p class="text-zinc-500 text-sm font-medium"><%= req.translations.overviewText %></p>
+            </div>
         </div>
-        <h2 class="text-3xl font-bold text-white mb-3">Welcome to VOLQ Panel!</h2>
-        <p class="text-gray-300 mb-6">The ultimate game server management panel with powerful features and intuitive interface.</p>
-        <button class="welcome-btn" id="getStartedBtn">
-          Get Started
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </button>
-      </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="liquid-glass glass-shine p-8 rounded-[2.5rem] flex flex-col group border border-white/5">
+                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-4"><%= req.translations.users %></span>
+                <div class="flex items-baseline gap-2">
+                     <span class="text-4xl font-bold group-hover:text-blue-400 transition-colors uppercase"><%= usersTotal %></span>
+                     <span class="text-[10px] text-emerald-500 font-bold uppercase tracking-tight">Active</span>
+                </div>
+            </div>
+            <div class="liquid-glass glass-shine p-8 rounded-[2.5rem] flex flex-col group border-l-2 border-l-blue-500">
+                <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-4"><%= req.translations.instances %></span>
+                <div class="flex items-baseline gap-2">
+                     <span class="text-4xl font-bold group-hover:text-blue-400 transition-colors uppercase"><%= instancesTotal %></span>
+                     <span class="text-[10px] text-zinc-600 font-bold uppercase tracking-tight">Servers</span>
+                </div>
+            </div>
+            <div class="liquid-glass glass-shine p-8 rounded-[2.5rem] flex flex-col group">
+                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-4"><%= req.translations.nodes %></span>
+                <div class="flex items-baseline gap-2">
+                     <span class="text-4xl font-bold group-hover:text-blue-400 transition-colors uppercase"><%= nodesTotal %></span>
+                     <span class="text-[10px] text-zinc-600 font-bold uppercase tracking-tight">Connected</span>
+                </div>
+            </div>
+            <div class="liquid-glass glass-shine p-8 rounded-[2.5rem] flex flex-col group">
+                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-4"><%= req.translations.images %></span>
+                <div class="flex items-baseline gap-2">
+                     <span class="text-4xl font-bold group-hover:text-blue-400 transition-colors uppercase"><%= imagesTotal %></span>
+                     <span class="text-[10px] text-zinc-600 font-bold uppercase tracking-tight">Verified</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Version & Info -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-stretch pt-4">
+            <div class="xl:col-span-8">
+                <div class="liquid-glass rounded-[3rem] p-12 relative overflow-hidden h-full flex flex-col lg:flex-row items-center gap-14 group border border-white/10 shadow-2xl">
+                    <div class="absolute -right-20 -top-20 w-80 h-80 bg-blue-600/5 rounded-full blur-[100px]"></div>
+                    
+                    <img src="/assets/logo.png" alt="Logo" class="w-48 h-48 rounded-[2.8rem] flex flex-shrink-0 items-center justify-center shadow-inner border border-white/5 rotate-2 group-hover:rotate-0 transition-all object-cover">
+
+
+                    <div class="flex-1 space-y-8">
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-4 leading-tight">Mastering Your Infrastructure</h3>
+                            <p class="text-zinc-500 text-lg leading-relaxed max-w-lg">
+                                <%= req.translations.sysInfoText %> <span id="currentVersion" class="text-blue-500 font-bold tracking-widest"><%= version %></span>. <br>
+                                <span id="versionStatus" class="text-sm font-bold mt-2 block text-emerald-500 uppercase tracking-widest">Up to Date</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Connectivity -->
+            <div class="xl:col-span-4 flex flex-col gap-4">
+                 <div class="liquid-glass rounded-[2.5rem] p-10 flex flex-col border border-white/5 h-full">
+                     <p class="text-[10px] font-bold text-zinc-700 uppercase tracking-[0.3em] text-center mb-10">Connectivity</p>
+                     <div class="space-y-4">
+                        <a href="https://discord.gg/DdNRaGgqqD" target="_blank" class="flex items-center justify-between p-5 rounded-[1.3rem] bg-white/[0.01] hover:bg-amber-500/10 border border-white/5 hover:border-amber-500/20 transition-all group">
+                            <span class="text-xs font-bold text-zinc-500 group-hover:text-amber-500 transition-colors ml-2">Official Discord</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)]"></div>
+                        </a>
+                        <a href="https://volq.xyz/" target="_blank" class="flex items-center justify-between p-5 rounded-[1.3rem] bg-white/[0.01] hover:bg-blue-500/10 border border-white/5 hover:border-blue-500/20 transition-all group">
+                            <span class="text-xs font-bold text-zinc-500 group-hover:text-blue-500 transition-colors ml-2">Documentation</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+                        </a>
+                        <a href="https://github.com/Tasin546" target="_blank" class="flex items-center justify-between p-5 rounded-[1.3rem] bg-white/[0.01] hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all group">
+                            <span class="text-xs font-bold text-zinc-500 group-hover:text-white transition-colors ml-2">GitHub Repository</span>
+                            <svg class="w-4 h-4 opacity-30 group-hover:opacity-100 transition-all" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                     </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- Support -->
+        <div class="flex justify-center pt-8 border-t border-white/[0.03]">
+            <a href="https://github.com/Tasin546" target="_blank" class="flex items-center gap-3 px-10 py-4 bg-white/[0.02] hover:bg-emerald-500 hover:text-black font-bold text-[11px] rounded-[1.3rem] border border-white/5 hover:border-emerald-400 transition-all shadow-3xl group">
+                <div class="w-8 h-8 rounded-full bg-emerald-500/10 group-hover:bg-black/20 flex items-center justify-center transition-colors">
+                    <svg class="w-3.5 h-3.5 text-emerald-500 group-hover:text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.45 12.13c-.34.18-.85.41-1.45.41-1.21 0-1.92-.71-1.92-1.91V8.5h-1V7.5h1V5.7l1.01-.2v2h1.44v1h-1.44v3.91c0 .59.3.83.9.83.33 0 .54-.05.74-.15l.28.94z"/></svg>
+                </div>
+                Official Support Center
+            </a>
+        </div>
     </div>
-  <% } %>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-    <!-- Header Section -->
-    <div class="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-6 mb-6 md:mb-8">
-      <div>
-        <h1 class="text-2xl md:text-3xl font-bold text-white"><%= req.translations.overview %></h1>
-        <p class="mt-1 md:mt-2 text-sm md:text-base text-gray-400"><%= req.translations.overviewText %></p>
-      </div>
-      <div class="flex gap-2 md:gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-        <a href="../account/debug" class="inline-flex items-center px-3 py-1.5 md:px-4 md:py-2 border border-gray-700 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-gray-300 hover:text-white whitespace-nowrap text-sm md:text-base">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 mr-1.5 md:mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clip-rule="evenodd" />
-          </svg>
-          <%= req.translations.accountJSON %>
-        </a>
-        <a href="../nodes/debug" class="inline-flex items-center px-3 py-1.5 md:px-4 md:py-2 border border-gray-700 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-gray-300 hover:text-white whitespace-nowrap text-sm md:text-base">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 mr-1.5 md:mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
-          </svg>
-          <%= req.translations.nodesJSON %>
-        </a>
-      </div>
-    </div>
-
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6 mb-6 md:mb-8">
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg md:rounded-xl p-4 md:p-6 border border-gray-700/50 shadow hover:shadow-md transition-all">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-xs md:text-sm font-medium text-gray-400"><%= req.translations.users %></p>
-            <p class="mt-0.5 md:mt-1 text-xl md:text-2xl lg:text-3xl font-semibold text-white"><%= usersTotal %></p>
-          </div>
-          <div class="p-2 md:p-3 rounded-full bg-indigo-500/10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg md:rounded-xl p-4 md:p-6 border border-gray-700/50 shadow hover:shadow-md transition-all">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-xs md:text-sm font-medium text-gray-400"><%= req.translations.instances %></p>
-            <p class="mt-0.5 md:mt-1 text-xl md:text-2xl lg:text-3xl font-semibold text-white"><%= instancesTotal %></p>
-          </div>
-          <div class="p-2 md:p-3 rounded-full bg-blue-500/10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg md:rounded-xl p-4 md:p-6 border border-gray-700/50 shadow hover:shadow-md transition-all">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-xs md:text-sm font-medium text-gray-400"><%= req.translations.nodes %></p>
-            <p class="mt-0.5 md:mt-1 text-xl md:text-2xl lg:text-3xl font-semibold text-white"><%= nodesTotal %></p>
-          </div>
-          <div class="p-2 md:p-3 rounded-full bg-emerald-500/10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg md:rounded-xl p-4 md:p-6 border border-gray-700/50 shadow hover:shadow-md transition-all">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-xs md:text-sm font-medium text-gray-400"><%= req.translations.images %></p>
-            <p class="mt-0.5 md:mt-1 text-xl md:text-2xl lg:text-3xl font-semibold text-white"><%= imagesTotal %></p>
-          </div>
-          <div class="p-2 md:p-3 rounded-full bg-purple-500/10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- System Info Card -->
-    <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg md:rounded-xl p-4 md:p-6 border border-gray-700/50 shadow mb-6 md:mb-8">
-      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-        <div class="flex-shrink-0">
-          <img src="/assets/logo.png" class="h-16 md:h-20" alt="VOLQ Panel Logo">
-        </div>
-        <div class="flex-grow text-center md:text-left">
-          <h3 class="text-base md:text-lg font-medium text-white mb-1 md:mb-2">System Information</h3>
-          <p class="text-gray-400 text-xs md:text-sm">
-            You are running VOLQ Panel version <span id="currentVersion" class="font-semibold text-white"></span>.
-            <span id="versionStatus" class="block mt-1 md:mt-1.5"></span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Quick Links -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
-      <a href="https://discord.gg/volq" class="group bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg md:rounded-xl p-4 md:p-6 shadow hover:shadow-md transition-all hover:-translate-y-0.5 md:hover:-translate-y-1">
-        <div class="flex items-center">
-          <div class="p-2 md:p-3 rounded-lg bg-white/10 backdrop-blur-sm mr-3 md:mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
-              <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-base md:text-lg font-semibold text-white">Discord Server</h3>
-            <p class="mt-0.5 text-xs md:text-sm text-indigo-200 group-hover:text-white">Join our community</p>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://discord.gg/volq" class="group bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg md:rounded-xl p-4 md:p-6 shadow hover:shadow-md transition-all hover:-translate-y-0.5 md:hover:-translate-y-1">
-        <div class="flex items-center">
-          <div class="p-2 md:p-3 rounded-lg bg-white/10 backdrop-blur-sm mr-3 md:mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10.75 16.82A7.462 7.462 0 0115 15.5c.71 0 1.396.098 2.046.282A.75.75 0 0018 15.06v-11a.75.75 0 00-.546-.721A9.006 9.006 0 0015 3a8.963 8.963 0 00-4.25 1.065V16.82zM9.25 4.065A8.963 8.963 0 005 3c-.85 0-1.673.118-2.454.339A.75.75 0 002 4.06v11a.75.75 0 00.954.721A7.506 7.506 0 015 15.5c1.579 0 3.042.487 4.25 1.32V4.065z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-base md:text-lg font-semibold text-white">Documentation</h3>
-            <p class="mt-0.5 text-xs md:text-sm text-blue-200 group-hover:text-white">Learn how to use VOLQ Panel</p>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://github.com/volq" class="group bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg md:rounded-xl p-4 md:p-6 shadow hover:shadow-md transition-all hover:-translate-y-0.5 md:hover:-translate-y-1">
-        <div class="flex items-center">
-          <div class="p-2 md:p-3 rounded-lg bg-white/10 backdrop-blur-sm mr-3 md:mr-4">
-            <svg class="h-6 w-6 md:h-8 md:w-8 text-white" height="1792" viewBox="0 0 1792 1792" width="1792" xmlns="http://www.w3.org/2000/svg">
-              <path fill="currentColor" d="M1664 896q0 251-146.5 451.5t-378.5 277.5q-27 5-39.5-7t-12.5-30v-211q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-121-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-86-13.5q-44 113-7 204-79 85-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-40 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 89t.5 54q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"/>
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-base md:text-lg font-semibold text-white">GitHub</h3>
-            <p class="mt-0.5 text-xs md:text-sm text-gray-300 group-hover:text-white">View our source code</p>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://github.com/volq" class="group bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-lg md:rounded-xl p-4 md:p-6 shadow hover:shadow-md transition-all hover:-translate-y-0.5 md:hover:-translate-y-1">
-        <div class="flex items-center">
-          <div class="p-2 md:p-3 rounded-lg bg-white/10 backdrop-blur-sm mr-3 md:mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-base md:text-lg font-semibold text-white">Support Us</h3>
-            <p class="mt-0.5 text-xs md:text-sm text-emerald-200 group-hover:text-white">Help fund the project</p>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
 </main>
 
-<!-- Confetti and Popup Script -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Version check logic
-    const myCurrentVersion = '<%= version %>';
-    const myLatestVersion = '<%= version %>';
-    const translations = {
-      runningLatestVersion: 'Up to date',
-      newReleaseVolq1: 'New release',
-      newReleaseVolq2: 'available',
-      newReleaseVolq3: '',
-      here: 'here'
-    };
 
-    const versionSpan = document.getElementById('currentVersion');
-    const versionStatusSpan = document.getElementById('versionStatus');
 
-    versionSpan.textContent = myCurrentVersion;
-
-    if (myCurrentVersion === myLatestVersion) {
-      versionStatusSpan.innerHTML = `
-        <span class="inline-flex items-center px-2 py-0.5 md:px-2.5 md:py-0.5 rounded-full text-xs font-medium bg-green-900 text-green-200">
-          <svg class="-ml-0.5 mr-1 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-            <circle cx="4" cy="4" r="3" />
-          </svg>
-          ${translations.runningLatestVersion}
-        </span>
-      `;
-    } else {
-      versionStatusSpan.innerHTML = `
-        <span class="inline-flex flex-wrap items-center px-2 py-0.5 md:px-2.5 md:py-0.5 rounded-full text-xs font-medium bg-amber-900 text-amber-200 gap-1">
-          <svg class="-ml-0.5 mr-1 h-2 w-2 text-amber-400" fill="currentColor" viewBox="0 0 8 8">
-            <circle cx="4" cy="4" r="3" />
-          </svg>
-          ${translations.newReleaseVolq1} ${myLatestVersion} ${translations.newReleaseVolq2}
-          <a href="https://github.com/volq" class="text-amber-300 hover:text-amber-100 underline">
-            ${translations.here}
-          </a>
-        </span>
-      `;
-    }
-
-    // Welcome popup logic
-    const welcomePopup = document.getElementById('welcomePopup');
-    const welcomeOverlay = document.getElementById('welcomeOverlay');
-    const closeBtn = document.getElementById('closeWelcome');
-    const getStartedBtn = document.getElementById('getStartedBtn');
-
-    function closePopup() {
-      if (welcomePopup && welcomeOverlay) {
-        welcomePopup.classList.remove('active');
-        welcomeOverlay.classList.remove('active');
-
-        setTimeout(() => {
-          welcomePopup.remove();
-          welcomeOverlay.remove();
-        }, 300);
-      }
-    }
-
-    if (welcomePopup) {
-      // Trigger confetti after popup appears
-      setTimeout(() => {
-        if (typeof confetti === 'function') {
-          confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e']
-          });
-        }
-      }, 500);
-
-      // Close popup when close button is clicked
-      if (closeBtn) {
-        closeBtn.addEventListener('click', closePopup);
-      }
-
-      // Close popup when get started button is clicked
-      if (getStartedBtn) {
-        getStartedBtn.addEventListener('click', closePopup);
-      }
-
-      // Close popup when overlay is clicked
-      if (welcomeOverlay) {
-        welcomeOverlay.addEventListener('click', closePopup);
-      }
-    }
-  });
-</script>
-
-<style>
-  /* Welcome Popup Styles */
-  .popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease-out;
-  }
-
-  .popup-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .welcome-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    color: white;
-    padding: 2.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    max-width: 32rem;
-    width: 90%;
-    text-align: center;
-    z-index: 1001;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  .welcome-popup.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  .welcome-popup h2 {
-    font-size: 1.875rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-  }
-
-  .welcome-popup p {
-    font-size: 1.125rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.9);
-  }
-
-  .welcome-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    color: #4f46e5;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-
-  .welcome-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  }
-
-  .close-popup-btn {
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-  }
-
-  .close-popup-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: rotate(90deg);
-  }
-</style>
+<%- include('../components/footer') %>

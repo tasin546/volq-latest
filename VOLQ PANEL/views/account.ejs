@@ -1,231 +1,156 @@
 <%- include('components/template') %>
-<body class="bg-[#010103] text-gray-300 font-inter min-h-screen" x-data="{ sidebarOpen: false }" @keydown.escape="sidebarOpen = false">
-    <main class="flex-grow container mx-auto px-4 py-8">
-        <!-- Header Section -->
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center w-full mx-auto pb-4 gap-4">
-            <div class="flex flex-col">
-                <h1 class="text-2xl md:text-3xl font-bold text-white">Account Information</h1>
-                <p class="text-gray-400">View and manage your account credentials</p>
+<main class="p-12 lg:p-16">
+    <div class="max-w-4xl mx-auto space-y-12">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div class="space-y-3">
+                <div class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[9px] font-bold rounded-lg w-max mb-1 tracking-tighter uppercase leading-none">Security Center</div>
+                <h2 class="text-4xl font-extrabold tracking-tight text-white leading-none">Account Ecosystem</h2>
+                <p class="text-zinc-500 text-sm font-medium">Coordinate your identity and security protocols across the VOLQ infrastructure.</p>
             </div>
-            <nav aria-label="Breadcrumb" class="inline-flex py-2 px-4 rounded-xl bg-white/5 backdrop-blur-sm">
-                <ol class="flex items-center space-x-2">
-                    <li>
-                        <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors flex items-center gap-2">
-                            <i class="fas fa-home"></i> <span>Home</span>
-                        </a>
-                    </li>
-                    <li aria-hidden="true"><i class="fas fa-chevron-right text-zinc-400 text-xs"></i></li>
-                    <li aria-current="page">
-                        <span class="text-sm text-white font-medium">Account</span>
-                    </li>
-                </ol>
-            </nav>
-        </header>
+        </div>
 
-        <!-- Main Content -->
-        <div class="mt-8 md:mt-12 flex justify-center animate-fade-in">
-            <div class="w-full max-w-md bg-white/5 p-6 rounded-xl border border-white/10 shadow-lg backdrop-blur-sm transition-all hover:shadow-xl hover:border-white/20">
-                <!-- Profile Icon -->
-                <div class="text-center mb-6">
-                    <div class="inline-block p-4 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 animate-float">
-                        <i class="fas fa-user-circle text-5xl text-white"></i>
+        <div class="grid grid-cols-1 gap-8">
+            <!-- Identity Section -->
+            <div class="liquid-glass rounded-[3rem] p-12 border border-white/5 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-blue-600/5 rounded-full blur-[100px]"></div>
+                
+                <div class="flex items-center gap-6 mb-12">
+                    <img class="w-16 h-16 rounded-[2rem] bg-zinc-800 border border-white/10 shadow-2xl" src="https://api.dicebear.com/9.x/thumbs/svg?seed=<%= user.username %>" alt="Avatar">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white leading-tight"><%= user.username %></h3>
+                        <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-[0.2em] mt-1"><%= user.email %></p>
                     </div>
                 </div>
 
-                <!-- Email Section -->
-                <section class="mb-8">
-                    <h2 class="text-xl font-semibold text-center mb-4">Account Credentials</h2>
-                    <div class="relative group">
-                        <label for="user-email" class="sr-only">Email address</label>
-                        <input 
-                            id="user-email"
-                            value="<%= user.email %>" 
-                            class="w-full px-4 py-3 rounded-lg bg-gray-800/70 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
-                            disabled
-                            aria-label="Your email address"
-                        >
-                        <button 
-                            onclick="copyEmail()" 
-                            class="absolute right-3 top-3 text-gray-400 hover:text-white transition-colors"
-                            aria-label="Copy email to clipboard"
-                            data-tooltip="Copy email"
-                        >
-                            <i class="fas fa-copy"></i>
-                        </button>
+                <form id="change-username-form" action="/change-username" method="POST" class="space-y-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] block mb-3 ml-2"><%= req.translations.username %></label>
+                            <div class="relative group">
+                                <input id="username" type="text" name="username" placeholder="<%= user.username %>" class="w-full px-6 py-4 bg-white/[0.03] border border-white/5 rounded-2xl text-white text-sm focus:ring-1 focus:ring-blue-500/30 outline-none transition-all placeholder:text-zinc-700">
+                                <div id="username-feedback" class="absolute -bottom-6 right-2 text-[9px] font-bold uppercase tracking-tighter text-zinc-600"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] block mb-3 ml-2">Email Address</label>
+                            <input type="email" value="<%= user.email %>" class="w-full px-6 py-4 bg-white/[0.01] border border-white/[0.02] rounded-2xl text-zinc-600 text-sm outline-none cursor-not-allowed" disabled>
+                        </div>
                     </div>
-                </section>
+                    <button type="submit" id="change-username-btn" class="w-max px-10 py-4 bg-white/5 border border-white/10 text-white text-[10px] font-bold rounded-2xl transition hover:bg-white/10 hover:border-white/20 active:scale-95 uppercase tracking-widest disabled:opacity-30 disabled:pointer-events-none" disabled>
+                        Synchronize Identity
+                    </button>
+                </form>
+            </div>
 
-                <!-- Password Change Section -->
-                <section class="border-t border-gray-700 pt-6">
-                    <h3 class="text-lg font-semibold mb-4">Change Password</h3>
-                    <form id="change-password-form" action="/change-password" method="POST" class="space-y-4">
-                        <div>
-                            <label for="currentPassword" class="block text-sm font-medium mb-1">Current Password</label>
-                            <div class="relative">
-                                <input 
-                                    type="password" 
-                                    id="currentPassword" 
-                                    name="currentPassword"
-                                    placeholder="Enter current password" 
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-800/70 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                                    required
-                                    aria-required="true"
-                                >
-                                <button type="button" class="absolute right-3 top-3 text-gray-400 hover:text-white toggle-password" data-target="currentPassword">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
+            <!-- Security Section -->
+            <div class="liquid-glass rounded-[3rem] p-12 border border-white/5 shadow-2xl space-y-12">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center text-zinc-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Security Protocol</h3>
+                </div>
+
+                <form id="change-password-form" action="/change-password" method="POST" class="space-y-8 max-w-2xl">
+                    <div class="space-y-6">
+                        <div class="relative">
+                            <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] block mb-3 ml-2">Legacy Access Credential</label>
+                            <input id="currentPassword" type="password" name="currentPassword" placeholder="••••••••" class="w-full px-6 py-4 bg-white/[0.03] border border-white/5 rounded-2xl text-white text-sm focus:ring-1 focus:ring-blue-500/30 outline-none transition-all">
+                            <div id="current-password-feedback" class="absolute -bottom-6 right-2 text-[9px] font-bold uppercase tracking-tighter text-zinc-600"></div>
                         </div>
-
                         <div>
-                            <label for="newPassword" class="block text-sm font-medium mb-1">New Password</label>
-                            <div class="relative">
-                                <input 
-                                    type="password" 
-                                    id="newPassword" 
-                                    name="newPassword"
-                                    placeholder="Enter new password" 
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-800/70 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                                    required
-                                    aria-required="true"
-                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                    aria-describedby="password-requirements"
-                                >
-                                <button type="button" class="absolute right-3 top-3 text-gray-400 hover:text-white toggle-password" data-target="newPassword">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            <div id="password-requirements" class="mt-2 text-sm text-white/70">
-                                <p class="font-medium">Password requirements:</p>
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li class="requirement-length">Minimum 8 characters</li>
-                                    <li class="requirement-uppercase">At least one uppercase letter</li>
-                                    <li class="requirement-lowercase">At least one lowercase letter</li>
-                                    <li class="requirement-number">At least one number</li>
-                                </ul>
-                            </div>
+                            <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] block mb-3 ml-2">New Security Sequence</label>
+                            <input id="newPassword" type="password" name="newPassword" placeholder="••••••••" class="w-full px-6 py-4 bg-white/[0.03] border border-white/5 rounded-2xl text-white text-sm focus:ring-1 focus:ring-blue-500/30 outline-none transition-all disabled:opacity-20 transition-opacity" disabled>
                         </div>
-
-                        <button 
-                            type="submit" 
-                            class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                        >
-                            Update Password
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button type="submit" id="change-password-btn" class="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold rounded-2xl transition shadow-2xl shadow-blue-500/20 active:scale-95 uppercase tracking-widest disabled:opacity-30 disabled:pointer-events-none" disabled>
+                            Authorize Update
                         </button>
-                    </form>
-                </section>
+
+                        <% if (user.twoFAEnabled !== true) { %>
+                            <button type="button" onclick="window.location.href = '/enable-2fa';" class="px-10 py-4 bg-white/[0.03] border border-white/10 text-white text-[10px] font-bold rounded-2xl transition hover:bg-white/10 active:scale-95 uppercase tracking-widest">
+                                Initialize 2FA
+                            </button>      
+                        <% } else { %>
+                            <form action="/disable-2fa" method="POST" class="inline">
+                                <button type="submit" class="px-10 py-4 bg-rose-500/10 border border-rose-500/20 text-rose-500 text-[10px] font-bold rounded-2xl transition hover:bg-rose-500 hover:text-white active:scale-95 uppercase tracking-widest">
+                                    Deactivate 2FA
+                                </button>
+                            </form>
+                        <% } %>
+                    </div>
+                </form>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
-    <%- include('components/footer') %>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Shared logic preserved from original
+        const usernameInput = document.getElementById('username');
+        const changeUsernameBtn = document.getElementById('change-username-btn');
+        const usernameFeedback = document.getElementById('username-feedback');
+        
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const changePasswordBtn = document.getElementById('change-password-btn');
+        const currentPasswordFeedback = document.getElementById('current-password-feedback');
 
-    <script>
-        // Copy email function
-        function copyEmail() {
-            const emailInput = document.getElementById('user-email');
-            navigator.clipboard.writeText(emailInput.value)
-                .then(() => {
-                    // Show a nice toast instead of alert
-                    const toast = document.createElement('div');
-                    toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg animate-toast';
-                    toast.textContent = 'Email copied to clipboard!';
-                    document.body.appendChild(toast);
-                    
-                    setTimeout(() => {
-                        toast.classList.add('animate-fade-out');
-                        setTimeout(() => toast.remove(), 300);
-                    }, 2000);
-                })
-                .catch(err => {
-                    console.error('Failed to copy email: ', err);
+        // Username Check
+        let uTimeout;
+        usernameInput.oninput = () => {
+            clearTimeout(uTimeout);
+            usernameFeedback.textContent = 'Scanning...';
+            uTimeout = setTimeout(async () => {
+                const val = usernameInput.value.trim();
+                if(!val) { usernameFeedback.textContent = ''; return; }
+                const res = await fetch(`/check-username?username=${encodeURIComponent(val)}`);
+                const data = await res.json();
+                usernameFeedback.textContent = data.exists ? 'Identification Taken' : 'Sequence Available';
+                usernameFeedback.className = `absolute -bottom-6 right-2 text-[9px] font-bold uppercase tracking-tighter ${data.exists ? 'text-rose-500' : 'text-emerald-500'}`;
+                changeUsernameBtn.disabled = data.exists || val.toLowerCase() === '<%= user.username %>'.toLowerCase();
+            }, 500);
+        };
+
+        // Password Change Check
+        let pTimeout;
+        currentPasswordInput.oninput = () => {
+            clearTimeout(pTimeout);
+            currentPasswordFeedback.textContent = 'Validating Key...';
+            pTimeout = setTimeout(async () => {
+                const currentPassword = currentPasswordInput.value;
+                if(!currentPassword) { currentPasswordFeedback.textContent = ''; return; }
+                const res = await fetch('/validate-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ currentPassword })
                 });
-        }
+                const data = await res.json();
+                currentPasswordFeedback.textContent = data.valid ? 'Key Verified' : 'Invalid Credential';
+                currentPasswordFeedback.className = `absolute -bottom-6 right-2 text-[9px] font-bold uppercase tracking-tighter ${data.valid ? 'text-emerald-500' : 'text-rose-500'}`;
+                newPasswordInput.disabled = !data.valid;
+            }, 500);
+        };
 
-        // Password visibility toggle
-        document.querySelectorAll('.toggle-password').forEach(button => {
-            button.addEventListener('click', function() {
-                const targetId = this.getAttribute('data-target');
-                const passwordInput = document.getElementById(targetId);
-                const icon = this.querySelector('i');
-                
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    icon.classList.replace('fa-eye', 'fa-eye-slash');
-                } else {
-                    passwordInput.type = 'password';
-                    icon.classList.replace('fa-eye-slash', 'fa-eye');
-                }
+        newPasswordInput.oninput = () => {
+            changePasswordBtn.disabled = !newPasswordInput.value;
+        };
+
+        // Submit logic preserved
+        document.getElementById('change-username-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const res = await fetch('/update-username', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentUsername: '<%= user.username %>', newUsername: usernameInput.value.trim() })
             });
-        });
-
-        // Password validation feedback
-        const newPassword = document.getElementById('newPassword');
-        if (newPassword) {
-            newPassword.addEventListener('input', function() {
-                const value = this.value;
-                
-                // Update requirement indicators
-                document.querySelector('.requirement-length').classList.toggle('text-green-400', value.length >= 8);
-                document.querySelector('.requirement-uppercase').classList.toggle('text-green-400', /[A-Z]/.test(value));
-                document.querySelector('.requirement-lowercase').classList.toggle('text-green-400', /[a-z]/.test(value));
-                document.querySelector('.requirement-number').classList.toggle('text-green-400', /\d/.test(value));
-            });
-        }
-    </script>
-
-    <style>
-        /* Animations */
-        @keyframes fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fade-in 0.6s ease-out forwards;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes toast {
-            0% { opacity: 0; transform: translateY(20px); }
-            10% { opacity: 1; transform: translateY(0); }
-            90% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(20px); }
-        }
-        .animate-toast {
-            animation: toast 2.3s ease-in-out forwards;
-        }
-        
-        @keyframes fade-out {
-            to { opacity: 0; }
-        }
-        .animate-fade-out {
-            animation: fade-out 0.3s ease-out forwards;
-        }
-
-        /* Tooltip for copy button */
-        [data-tooltip] {
-            position: relative;
-        }
-        [data-tooltip]:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            white-space: nowrap;
-            margin-bottom: 0.5rem;
-        }
-    </style>
-</body>
+            if(res.ok) window.location.href = '/login?err=UpdatedCredentials';
+            else alert('Handshake failed.');
+        };
+    });
+</script>
+<%- include('components/footer') %>
