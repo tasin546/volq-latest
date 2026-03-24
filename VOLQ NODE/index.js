@@ -366,33 +366,17 @@ function initializeWebSocketServer(server) {
 
         async function executeCommand(ws, container, command) {
             try {
-                const stream = await container.attach({
-                    stream: true,
-                    stdin: true,
-                    stdout: true,
-                    stderr: true,
-                    hijack: true
+                const exec = await container.exec({
+                    Cmd: ['/bin/sh', '-c', "printf '%s\\n' \"$MCCMD\" > /proc/1/fd/0"],
+                    Env: [`MCCMD=${command}`],
+                    AttachStdout: false,
+                    AttachStderr: false,
+                    Tty: false,
                 });
-        
-                stream.on('data', (chunk) => {
-                    //ws.send(chunk.toString('utf8'));
-                });
-        
-                stream.on('end', () => {
-                    ws.send('\u001b[1m\u001b[33mcontainer@volq~ \u001b[0mServer marked as Offline\r\n');
-                });
-        
-                stream.on('error', (err) => {
-                    log.error('Attach stream error:', err);
-                    ws.send(`Error in attach stream: ${err.message}`);
-                });
-        
-                // Write the command to the stream
-                stream.write(command + '\n'); // your not disattaching.
-        
+                await exec.start({ Detach: true });
             } catch (err) {
-                log.error('Failed to attach to container:', err);
-                ws.send(`Failed to attach to container: ${err.message}`);
+                log.error('Failed to execute command:', err.message);
+                ws.send(`\r\n\u001b[31m[volqd] \x1b[0mFailed to send command: ${err.message}\r\n`);
             }
         }
 

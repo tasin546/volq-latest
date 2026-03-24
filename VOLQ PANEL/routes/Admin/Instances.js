@@ -57,7 +57,7 @@ async function checkNodeStatus(node) {
       method: "get",
       url: `http://${node.address}:${node.port}/`,
       auth: {
-        username: "Skyport",
+        username: "Volq",
         password: node.apiKey,
       },
       headers: {
@@ -127,7 +127,7 @@ async function deleteInstance(instance) {
         method: "delete",
         url: `http://${instance.Node.address}:${instance.Node.port}/instances/${instance.ContainerId}`,
         auth: {
-          username: "Skyport",
+          username: "Volq",
           password: instance.Node.apiKey
         },
         timeout: DEFAULT_TIMEOUT,

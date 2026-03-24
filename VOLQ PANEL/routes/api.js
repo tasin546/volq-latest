@@ -231,7 +231,7 @@ router.ws("/api/instance/console/:id", async (ws, req) => {
         };
 
         socket.onerror = (error) => {
-            ws.send('\x1b[31;1mHydraDaemon instance appears to be down');
+            ws.send('\x1b[31;1mvolqd instance appears to be down');
             console.error('WebSocket error:', error);
         };
 

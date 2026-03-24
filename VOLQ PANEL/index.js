@@ -184,7 +184,7 @@ app.set("view engine", "ejs");
  * routing. The server then starts listening on a port defined in the configuration file, logging the port
  * number to indicate successful startup.
  */
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 /**
  * Dynamically loads all route modules from the 'routes' directory, applying WebSocket support to each.
