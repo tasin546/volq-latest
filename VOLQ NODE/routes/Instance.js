@@ -212,7 +212,7 @@ router.get('/:id/disk/usage', async (req, res) => {
     await fs.access(dirPath);
     
     try {
-      const { stdout } = await execPromise(`du -sh ${dirPath}`);
+      const { stdout } = await execPromise(`du -sh "${dirPath}"`);
       const size = stdout.split('\t')[0];
       res.json({ 
         id, 

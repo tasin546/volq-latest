@@ -176,5 +176,6 @@
     "databaseCannotDelete": "Kan de enige gebruiker in de database niet verwijderen.",
     "userCreateError": "Fout bij het aanmaken van de gebruiker",
     "saveChanges": "Wijzigingen Opslaan",
-    "jsonSelectFile": "Selecteer een JSON-bestand."
+    "jsonSelectFile": "Selecteer een JSON-bestand.",
+    "analytics": "Analyse"
 }

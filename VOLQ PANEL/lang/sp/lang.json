@@ -176,5 +176,6 @@
     "databaseCannotDelete": "No se puede eliminar el único usuario en la base de datos.",
     "userCreateError": "Error al crear el usuario",
     "saveChanges": "Guardar cambios",
-    "jsonSelectFile": "Por favor, selecciona un archivo JSON."
+    "jsonSelectFile": "Por favor, selecciona un archivo JSON.",
+    "analytics": "Analítica"
 }
