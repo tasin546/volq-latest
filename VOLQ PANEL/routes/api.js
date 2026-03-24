@@ -480,7 +480,7 @@ router.get('/api/images', validateApiKey, async (req, res) => {
 // System endpoints
 router.get('/api/name', validateApiKey, async (req, res) => {
     try {
-        const name = await db.get('name') || 'HydraPanel';
+        const name = await db.get('name') || 'VOLQ Panel';
         res.json({ name });
     } catch (error) {
         errorResponse(res, 500, 'Failed to retrieve system name', error);

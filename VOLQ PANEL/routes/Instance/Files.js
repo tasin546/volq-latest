@@ -89,7 +89,7 @@ router.get("/instance/:id/files", async (req, res) => {
             req, 
             instance,
             user: req.user, 
-            name: await db.get('name') || 'HydraPanel', 
+            name: await db.get('name') || 'VOLQ Panel', 
             logo: await db.get('logo') || false,
             addons: {
                 plugins: allPluginData

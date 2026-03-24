@@ -122,7 +122,7 @@ router.get("/enable-2fa", async (req, res) => {
         );
         const secret = speakeasy.generateSecret({
             length: 20,
-            name: `HydraPanel (${currentUser.username})`,
+            name: `VOLQ Panel (${currentUser.username})`,
             issuer: "VOLQ Panel",
         });
 
