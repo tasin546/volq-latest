@@ -8,6 +8,6 @@
   "note": "you can also use Mysql if you put mysql://user:pass@localhost:3306/dbname into databaseURL!",
   "databaseURL": "sqlite://skyport.db",
   "databaseTable": "skyport",
-  "ogTitle": "VOLQ Panel",
-  "ogDescription": "This is an instance of VOLQ Panel - learn more at volq.xyz"
+  "ogTitle": "TeryxPanel",
+  "ogDescription": "This is an instance of the Teryx Panel - learn more at github.com/teryxlabs"
 }

@@ -1,6 +1,6 @@
 /*
  *  VOLQ Panel
- *  (c) 2025 VOLQ
+ *  (c) 2026 VOLQ
  *
  */
 
