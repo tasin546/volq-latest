@@ -159,7 +159,7 @@ async function sendTestEmail(recipientEmail) {
       const mailOptions = {
         from: `${smtpSettings.fromName} <${smtpSettings.fromAddress}>`,
         to: recipientEmail,
-        subject: 'Skyport Test Message',
+        subject: 'VOLQ Panel Test Message',
         html: `
           <!DOCTYPE html>
           <html>
@@ -194,11 +194,11 @@ async function sendTestEmail(recipientEmail) {
                               <td style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; padding: 35px;">
                                 <!-- Greeting -->
                                 <h1 style="margin-top: 0; color: #2F3133; font-size: 19px; font-weight: bold; text-align: left;">
-                                  Hello from Skyport Panel!
+                                  Hello from VOLQ Panel!
                                 </h1>
                                 <!-- Intro -->
                                 <p style="margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;">
-                                  This is a test of the Skyport mail system. You're good to go!.
+                                  This is a test of the VOLQ Panel mail system. You're good to go!.
                                 </p>
                                 <p>
                                   Regards,

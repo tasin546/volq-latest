@@ -5,8 +5,8 @@ const CatLoggr = require('cat-loggr');
 const log = new CatLoggr();
 
 async function init() {
-    const skyport = await db.get('volq_instance');
-    if (!skyport) {
+    const volq = await db.get('volq_instance');
+    if (!volq) {
         log.init('this is probably your first time starting VOLQ Panel, welcome!');
         log.init('you can find documentation for the panel at volq.xyz');
 
