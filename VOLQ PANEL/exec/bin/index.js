@@ -10,7 +10,7 @@ async function loadChalk() {
 }
 
 program
-    .version("0.1.0-beta6")
+    .version("1.0.0")
     .description("Command Line Interface for the VOLQ Panel");
 
 program

@@ -1,6 +1,6 @@
 {
   "name": "volq-panel",
-  "version": "4.0",
+  "version": "1.0.0",
   "description": "VOLQ Panel is a game server management panel built using Node.js with Express and Dockerode.",
   "main": "index.js",
   "bin": {

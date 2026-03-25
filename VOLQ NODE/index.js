@@ -54,6 +54,7 @@ const deploymentRouter = require('./routes/Deploy.js');
 const filesystemRouter = require('./routes/Volume.js');
 const archiveRouter = require('./routes/ArchiveVolume.js');
 const powerRouter = require('./routes/PowerActions.js');
+const pluginRouter = require('./routes/Plugins.js');
 
 
 const os = require('os');
@@ -162,6 +163,9 @@ app.use('/archive', archiveRouter);
 
 // fs
 app.use('/fs', filesystemRouter);
+
+// plugins
+app.use('/plugins', pluginRouter);
 
 // FTP
 start();

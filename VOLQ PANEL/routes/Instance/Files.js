@@ -76,7 +76,7 @@ router.get("/instance/:id/files", async (req, res) => {
             files: files, 
             user: req.user, 
             instance,
-            name: await db.get('name') || 'DragonPanel', 
+            name: await db.get('name') || 'VOLQ Panel', 
             logo: await db.get('logo') || false ,
             addons: {
                 plugins: allPluginData

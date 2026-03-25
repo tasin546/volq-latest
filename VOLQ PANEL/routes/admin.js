@@ -17,6 +17,8 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("node:fs");
 const { logAudit } = require("../handlers/auditlog.js");
+const { loadPlugins } = require("../plugins/loadPls.js");
+const pluginsData = loadPlugins(path.join(__dirname, "../plugins"));
 const nodemailer = require("nodemailer");
 const { sendTestEmail } = require("../handlers/email.js");
 
@@ -1518,15 +1520,41 @@ router.get("/admin/auditlogs", isAdmin, async (req, res) => {
   try {
     let audits = await db.get("audits");
     audits = audits ? JSON.parse(audits) : [];
+    const filters = {
+      actionFilter: req.query.actionFilter || '',
+      dateRange: req.query.dateRange || ''
+    };
+    const actions = [...new Set(audits.map(a => a.action).filter(Boolean))];
     res.render("admin/auditlogs", {
       req,
       user: req.user,
       name: (await db.get("name")) || "VOLQ Panel",
       logo: (await db.get("logo")) || false,
       audits,
+      filters,
+      actions,
     });
   } catch (err) {
     console.error("Error fetching audits:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/admin/plugins", isAdmin, async (req, res) => {
+  try {
+    const allPlugins = Object.values(pluginsData).map(p => p.config);
+    const enabledPlugins = allPlugins.filter(p => p.enabled !== false);
+    res.render("admin/plugins", {
+      req,
+      user: req.user,
+      name: (await db.get("name")) || "VOLQ Panel",
+      logo: (await db.get("logo")) || false,
+      plugins: allPlugins,
+      enabledPlugins,
+      addons: { plugins: allPlugins },
+    });
+  } catch (err) {
+    console.error("Error fetching plugins:", err);
     res.status(500).send("Internal Server Error");
   }
 });

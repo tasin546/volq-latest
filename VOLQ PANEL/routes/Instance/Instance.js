@@ -200,7 +200,7 @@ router.get("/instance/:id", isAuthenticated, async (req, res) => {
             port,
             domain,
             user: req.user,
-            name: (await db.get("name")) || "TreyxPanel",
+            name: (await db.get("name")) || "VOLQ Panel",
             logo: (await db.get("logo")) || false,
             files,
             addons: {

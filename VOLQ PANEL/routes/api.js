@@ -191,6 +191,27 @@ router.get('/api/instances', validateApiKey, async (req, res) => {
     }
 });
 
+router.ws("/stats/:id", async (ws, req) => {
+    const { id } = req.params;
+    try {
+        const instance = await db.get(id + '_instance');
+        if (!instance) { ws.close(1008, "Instance not found"); return; }
+        const node = instance.Node;
+        if (!node || !node.address || !node.port) { ws.close(1008, "Invalid node"); return; }
+
+        const socket = new WebSocket(`ws://${node.address}:${node.port}/stats/${instance.ContainerId}/${instance.VolumeId}`);
+
+        socket.onmessage = msg => { try { ws.send(msg.data); } catch (e) {} };
+        socket.onerror = () => { try { ws.send(JSON.stringify({ state: 'FAILED' })); } catch (e) {} };
+        socket.onclose = () => { try { ws.close(); } catch (e) {} };
+
+        ws.on('close', () => { try { socket.close(); } catch (e) {} });
+    } catch (error) {
+        console.error('Stats WebSocket error:', error);
+        ws.close(1011, "Internal server error");
+    }
+});
+
 router.ws("/api/instance/console/:id", async (ws, req) => {
     if (!req.user) {
         ws.close(1008, "Authorization required");
