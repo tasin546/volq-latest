@@ -6,8 +6,8 @@
   "mode": "production",
   "version": "4.0",
   "note": "you can also use Mysql if you put mysql://user:pass@localhost:3306/dbname into databaseURL!",
-  "databaseURL": "sqlite://skyport.db",
-  "databaseTable": "skyport",
-  "ogTitle": "TeryxPanel",
-  "ogDescription": "This is an instance of the Teryx Panel - learn more at github.com/teryxlabs"
+  "databaseURL": "sqlite://volq.db",
+  "databaseTable": "volq",
+  "ogTitle": "VOLQ Panel",
+  "ogDescription": "This is an instance of the VOLQ Panel - learn more at github.com/tasin546/volq-latest"
 }

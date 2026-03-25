@@ -1,5 +1,5 @@
 node_modules/
-skyport.db
+volq.db
 sessions.db
 package-lock.json
 tmp/
