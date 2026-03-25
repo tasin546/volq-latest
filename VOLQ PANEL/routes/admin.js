@@ -98,12 +98,18 @@ async function checkNodeStatus(node) {
 
 router.get("/admin/apikeys", isAdmin, async (req, res) => {
   try {
+    const apiKeys = (await db.get("apiKeys")) || [];
+    const page = parseInt(req.query.page) || 1;
+    const perPage = 10;
+    const totalPages = Math.max(1, Math.ceil(apiKeys.length / perPage));
+    const pagination = { page, totalPages, total: apiKeys.length, perPage };
     res.render("admin/apikeys", {
       req,
       user: req.user,
-      apiKeys: (await db.get("apiKeys")) || [],
+      apiKeys: apiKeys.slice((page - 1) * perPage, page * perPage),
       name: (await db.get("name")) || "VOLQ Panel",
       logo: (await db.get("logo")) || false,
+      pagination,
     });
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve API keys" });
@@ -1544,6 +1550,10 @@ router.get("/admin/plugins", isAdmin, async (req, res) => {
   try {
     const allPlugins = Object.values(pluginsData).map(p => p.config);
     const enabledPlugins = allPlugins.filter(p => p.enabled !== false);
+    const pluginSidebar = {};
+    allPlugins.forEach(p => {
+      if (p.name) pluginSidebar[p.name] = `/admin/plugins/${encodeURIComponent(p.name)}`;
+    });
     res.render("admin/plugins", {
       req,
       user: req.user,
@@ -1551,6 +1561,7 @@ router.get("/admin/plugins", isAdmin, async (req, res) => {
       logo: (await db.get("logo")) || false,
       plugins: allPlugins,
       enabledPlugins,
+      pluginSidebar,
       addons: { plugins: allPlugins },
     });
   } catch (err) {

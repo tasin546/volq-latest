@@ -43,9 +43,14 @@ router.get('/:id', async (req, res) => {
     try {
         await fs.mkdir(pluginsPath, { recursive: true });
         const files = await fs.readdir(pluginsPath);
-        const plugins = files
-            .filter(f => f.endsWith('.jar'))
-            .map(f => ({ name: f, filename: f }));
+        const plugins = await Promise.all(
+            files
+                .filter(f => f.endsWith('.jar'))
+                .map(async f => {
+                    const stat = await fs.stat(path.join(pluginsPath, f)).catch(() => ({ size: 0 }));
+                    return { name: f, filename: f, size: stat.size };
+                })
+        );
         res.json({ plugins });
     } catch (err) {
         res.status(500).json({ error: err.message });

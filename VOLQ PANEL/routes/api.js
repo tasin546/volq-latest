@@ -201,6 +201,9 @@ router.ws("/stats/:id", async (ws, req) => {
 
         const socket = new WebSocket(`ws://${node.address}:${node.port}/stats/${instance.ContainerId}/${instance.VolumeId}`);
 
+        socket.onopen = () => {
+            socket.send(JSON.stringify({ event: 'auth', args: [node.apiKey] }));
+        };
         socket.onmessage = msg => { try { ws.send(msg.data); } catch (e) {} };
         socket.onerror = () => { try { ws.send(JSON.stringify({ state: 'FAILED' })); } catch (e) {} };
         socket.onclose = () => { try { ws.close(); } catch (e) {} };

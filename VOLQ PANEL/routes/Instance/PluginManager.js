@@ -44,7 +44,7 @@ router.get("/instance/:id/plugins/list", async (req, res) => {
       `http://${instance.Node.address}:${instance.Node.port}/plugins/${instance.VolumeId}`,
       { auth: { username: "Volq", password: instance.Node.apiKey } }
     );
-    res.json(response.data);
+    res.json(response.data.plugins || []);
   } catch (err) {
     res.status(500).json({ error: err.response?.data?.error || err.message });
   }
